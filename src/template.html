@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>합참의장 — 한반도 통일 작전</title>
+<style>/*CSS*/</style>
+<script>window.JCS_API_BASE = "/*API_BASE*/";</script>
+</head>
+<body>
+<!-- 닉네임 금지어(브라우저 즉시 검사용). 서버의 config/banned_words.txt 와 함께 적용됩니다. 한 줄에 한 단어. -->
+<script type="text/plain" id="bannedWords">
+관리자
+운영자
+admin
+</script>
+
+<div id="menu">
+  <div id="menuArt"></div>
+  <div id="menuLeft">
+    <div class="emblem">JOINT CHIEFS OF STAFF · 합동참모본부</div>
+    <h1>합참의장</h1>
+    <h2>한반도 통일 작전</h2>
+    <div class="tagline">전투는 부대가 합니다. 당신은 지시합니다.<br>60만 북한군, 끝없는 침투, 그리고 압록강 너머의 그림자 — 통일의 길을 지휘하십시오.</div>
+    <div id="menuBtns">
+      <button class="mbtn pri" id="mStart">시작하기<small>프롤로그부터 새 전쟁을 시작합니다</small></button>
+      <button class="mbtn" id="mGuide">게임 안내<small>세계관 · 시스템 · 북한군 AI · 랭킹 규칙</small></button>
+      <button class="mbtn" id="mSettings">설정<small>프롤로그 · 기본 배속 · 표시 옵션</small></button>
+      <button class="mbtn" id="mCredits">제작 정보<small>데이터 출처 · 개인정보 안내</small></button>
+    </div>
+    <div class="menuFoot">본 게임은 가상의 시나리오이며, 부대 정보는 공개 자료를 바탕으로 한 추정치입니다.</div>
+  </div>
+  <div id="rankPanel">
+    <h3>명예의 전당 <span id="rankMode"></span></h3>
+    <div id="rankCats"></div>
+    <div id="rankBoards"></div>
+    <div id="rankDesc"></div>
+    <div id="rankWrap"><table id="rankTbl"><thead><tr><th>순위</th><th>지휘관</th><th style="text-align:right">기록</th><th>난이도</th><th style="text-align:right">일자</th></tr></thead><tbody id="rankBody"></tbody></table></div>
+  </div>
+</div>
+
+<div id="app">
+  <div id="topbar">
+    <div class="title">합동참모본부 전쟁지휘체계<small>한반도 통일 작전</small></div>
+    <div id="clock">D+0  00:00</div>
+    <div id="speed">
+      <button class="btn" data-sp="pause" id="pauseBtn" title="일시정지 (Space)">❚❚</button>
+      <button class="btn" data-sp="1" title="1배속: 5초 = 1일 (키 1)">1×</button>
+      <button class="btn" data-sp="2" title="키 2">2×</button>
+      <button class="btn" data-sp="4" title="키 3">4×</button>
+      <button class="btn" data-sp="8" title="키 4">8×</button>
+      <button class="btn" data-sp="16" title="키 5">16×</button>
+    </div>
+    <div class="spacer"></div>
+    <button class="btn" id="helpBtn">도움말</button>
+    <button class="btn" id="toMenuBtn">메인 화면</button>
+  </div>
+  <div id="main">
+    <div id="mapWrap">
+      <canvas id="map"></canvas>
+      <div id="unitLayer"></div>
+      <div id="hint"></div>
+      <div id="toast"></div>
+      <div id="zoomBtns"><button class="btn" id="zin">+</button><button class="btn" id="zout">−</button><button class="btn" id="zfit" title="전체 보기">⤢</button></div>
+      <div id="logBox"></div>
+      <div id="legend">
+        <div><i style="background:#3070cd"></i>아군 통제 지역 &nbsp; <i style="background:#c43434"></i>적 통제 지역</div>
+        <div><i style="background:transparent;border:3px solid #f2c94c"></i>사단급 &nbsp; <i style="background:transparent;border:3px solid #4fd1ff"></i>여단·대대급(직할)</div>
+        <div><i style="background:#1e4fd8"></i>미군 &nbsp; <i style="background:#b00000"></i>북한군 &nbsp; <i style="background:#ff8c00"></i>중국군</div>
+        <div><span style="color:#ffd34d">━</span> 현재 전선 &nbsp; <span style="color:#fff">┅</span> 군사분계선</div>
+      </div>
+    </div>
+    <div id="side"><div id="status"></div><div id="ctx"></div></div>
+  </div>
+</div>
+
+<div id="prologue"><div class="txt"></div><button id="skipBtn">건너뛰기 ▶</button></div>
+<div id="loading">사령부와 교신 중…</div>
+
+<div class="modal" id="brief"><div class="box">
+  <h2>작전 브리핑</h2>
+  <p>북한군 약 60만 명이 요새화된 휴전선 북방에 전개해 있습니다. 전선을 압록강·두만강까지 밀어 올려 <b>한반도 전역을 통일</b>하십시오.</p>
+  <ul style="margin-top:8px">
+    <li>교도대 동원사단이 전쟁 내내 증원되고, 특수작전군이 수일 간격으로 후방에 침투합니다.</li>
+    <li>북중 국경에 다가갈수록 중국의 개입 위험이 커집니다.</li>
+    <li>북한군은 모든 지휘관의 과거 전쟁을 학습한 교리로 대응합니다.</li>
+  </ul>
+  <h3>난이도 선택</h3>
+  <div class="row">
+    <button class="btn big" data-diff="easy">쉬움<br><small>북한군 D+5 이후 공세</small></button>
+    <button class="btn big pri" data-diff="normal">보통<br><small>국군 공세 지연 시 D+3 선제공세</small></button>
+    <button class="btn big red" data-diff="hard">어려움<br><small>개전 즉시 북한 전면 공세</small></button>
+  </div>
+  <div class="row"><button class="btn" id="briefBack">메인 화면으로</button></div>
+</div></div>
+
+<div class="modal" id="help"><div class="box">
+  <h2>도움말</h2>
+  <h3>조작</h3>
+  <ul>
+    <li>마우스 휠: 확대·축소 · 드래그: 지도 이동 · 부대 버튼 클릭: 부대 선택 · 빈 곳 클릭/Esc: 선택 해제</li>
+    <li>부대 선택 후 지도 우클릭: 이동 목표 지정 · Space: 일시정지 · 1~5: 1·2·4·8·16배속</li>
+    <li>일시정지 중에도 모든 지시를 내릴 수 있습니다. 1배속은 5초에 하루입니다.</li>
+  </ul>
+  <h3>자세(지시)</h3>
+  <ul>
+    <li><b>공격</b>: 전선을 밀어내며 전진. 피해가 큼. 기계화·기갑일수록 돌파가 빠름.</li>
+    <li><b>방어</b>: 진지 고수, 피해 감소 · <b>지연전</b>: 천천히 물러나며 저항 · <b>후퇴</b>: 적에게서 이탈 · <b>예비·정비</b>: 사기·병력 회복(교전 시 취약)</li>
+    <li>여단별로 다른 자세를 줄 수 있으며, 사단의 이동은 다수 병력의 자세를 따릅니다.</li>
+    <li>포병: 최대 화력(포탄 소모 큼) / 보통 / 탄약 절약 / 사격 중지. 포탄이 떨어지면 '탄약 긴급 보급'을 쓰십시오.</li>
+  </ul>
+  <h3>특수 작전</h3>
+  <ul>
+    <li>공수특전여단: 320km 이내 후방 침투 · 신속대응사단: 130km 이내 공중강습 (제공권 50% 이상)</li>
+    <li>해병사단·여단: 600km 이내 해안 상륙(48시간 준비)</li>
+    <li>보급로가 끊긴 적은 사기가 무너져 투항합니다. 상륙·공수로 포위하면 효과적입니다.</li>
+  </ul>
+  <h3>운영 요령</h3>
+  <ul>
+    <li><b>국민 지지도</b>: 상태 패널의 흰 눈금이 목표치입니다. 전선이 10일 넘게 진전하지 않으면 교착 감점이 쌓이니, 한 축선이라도 계속 밀어 주십시오.</li>
+    <li><b>장사정포</b>: 수도권 민간인 피해의 주원인입니다. 개전 직후 '대화력전 우선'을 켜고 공군 전략 타격을 배분하십시오.</li>
+    <li><b>침투조</b>: 패널 하단 '적 후방 침투조' 목록을 눌러 위치로 이동한 뒤 인근 지역방위 사단에 공격을 지시하십시오.</li>
+    <li><b>중국</b>: 북위 39.6° 이북에 부대가 많을수록 개입 위험이 급증합니다. 외교 협상·북진 한계선으로 시간을 버십시오.</li>
+    <li><b>WMD</b>: 평양 60km 이내 접근 시 위협도가 빠르게 오릅니다. 킬체인으로 낮춘 뒤 진입하십시오.</li>
+  </ul>
+  <div class="row"><button class="btn pri big" data-close>닫기</button></div>
+</div></div>
+
+<div class="modal" id="guide"><div class="box">
+  <h2>게임 안내</h2>
+  <div id="guideTabs">
+    <button class="chip sel" data-page="world">세계관·목표</button><button class="chip" data-page="will">국민 지지도</button>
+    <button class="chip" data-page="kpa">북한군·학습 AI</button><button class="chip" data-page="allies">미군·중국군</button>
+    <button class="chip" data-page="rank">랭킹 규칙</button>
+  </div>
+  <div class="gpage" data-page="world">
+    <h3>배경</h3>
+    <p>합참 작전본부장이던 당신은 대장 진급과 함께 합동참모의장에 취임합니다. 북한의 전면전 준비가 확인되고 휴전선 일대 국지 교전이 잦아지자, 정부는 미국과 협의해 개전을 결정합니다.</p>
+    <h3>목표와 종료</h3>
+    <ul>
+      <li><b>승리</b>: 전선을 압록강·두만강까지 올려 북측 지역을 모두 확보.</li>
+      <li><b>패배</b>: 국민 지지도 0(전쟁 지속 불가), 남측 영토 대부분 상실(전선 붕괴), 또는 항복.</li>
+    </ul>
+    <h3>당신의 역할</h3>
+    <p>직접 전투하지 않습니다. 전군·사단·여단 단위로 자세와 포병 사격을 지시하고, 공군 배분과 전략 조치를 결정합니다. 전투 결과와 전선 이동은 시뮬레이션이 실시간으로 계산합니다.</p>
+    <h3>난이도</h3>
+    <ul><li>쉬움: 북한군 전투효율 ×0.92, 공세 D+5 이후 · 보통: ×0.98, 국군 공세 지연 시 D+3 선제공세 · 어려움: ×1.06, 개전 즉시 14일간 전면 공세, 특수작전 예비·교도대·중국 개입 위험 증가</li></ul>
+  </div>
+  <div class="gpage" data-page="will" style="display:none">
+    <p>국민 지지도는 매일 <b>목표 지지도</b>를 향해 12%씩 수렴합니다. 돌발 사건(부대 와해 −1.5, 서울 함락 −10, WMD 피격 −12, 평양 점령 +5 등)은 즉시 충격을 준 뒤 서서히 목표치로 돌아갑니다.</p>
+    <div class="formula">목표 = 68<br>
+      + 개전 결집 12·e<sup>−일/25</sup><br>
+      − 11·log₁₀(1 + 전사환산/1000) &nbsp;&nbsp;(전사 1, 실종 0.7, 부상 0.25, 미군 ×0.3)<br>
+      − 6·log₁₀(1 + 민간인 피해/2000)<br>
+      + 32·북측 확보율 + 평양 점령 8<br>
+      − 교착: 마지막 진전(확보율 +1%p) 후 10일 초과분 ×0.6 (최대 25)<br>
+      − 장기전 피로: D+45 이후 ×0.12 (최대 15)<br>
+      − 남측 영토 피탈률 ×90 − 서울 함락 25<br>
+      − WMD 피격 1회당 6 − 중국 참전 중 6 − 동원령 2</div>
+    <p style="margin-top:8px">사상자 피로는 로그 함수라서 초기 손실의 충격이 가장 크고, 같은 수의 사상자라도 갈수록 감점이 줄어듭니다.</p>
+  </div>
+  <div class="gpage" data-page="kpa" style="display:none">
+    <h3>북한군 규모</h3>
+    <ul>
+      <li>전방 4개 군단(군단당 보병사단 4 + 예비 1 + 포병여단군 + 경보병여단), 기계화·전차 군단 4개와 사단 2개, 제91수도방어군단, 후방 군단 6개, 제11군단(폭풍군단) — 개전 시 약 62만 명.</li>
+      <li>교도대 동원사단이 수일 간격으로 2개씩 편성되며(난이도별 10/14/18개), 특수작전군이 3~9일 간격으로 한 번에 1개 조씩 공중·해상·땅굴·점령지 유격으로 침투합니다.</li>
+      <li>휴전선 북방은 요새화되어 있어 방어 효율이 높습니다.</li>
+    </ul>
+    <h3>학습 AI — 전체 공유</h3>
+    <p>북한군은 플레이어 개인이 아니라 <b>모든 지휘관의 전쟁 기록</b>을 하나의 교리로 학습합니다. 3일 이상 진행된 판이 끝나면(중도 이탈 포함) 기록이 서버로 전송되어 반영됩니다.</p>
+    <ul>
+      <li>국군 주공 축선을 기억해 해당 축선의 요새 종심을 늘리고 기계화 예비대를 미리 배치합니다.</li>
+      <li>자주 쓰인 상륙 지점에 해안 수비대를 두고, 공중작전이 잦으면 후방 경계를 강화합니다.</li>
+      <li>효과가 컸던 침투 방식을 더 자주 사용합니다.</li>
+      <li>공세·역습·지연전 판단 기준, 예비대 운용, 침투·동원 주기 등 교리 13개 항목을 판마다 조금씩 바꿔 보고, 더 효과적이었던 교리를 채택합니다.</li>
+      <li>누적된 전쟁 수에 비례해 지휘 숙련도가 오릅니다(최대 +8%).</li>
+    </ul>
+    <p>많은 지휘관이 같은 전술을 쓸수록 그 전술은 점점 통하지 않게 됩니다.</p>
+  </div>
+  <div class="gpage" data-page="allies" style="display:none">
+    <h3>미군</h3>
+    <ul><li>미 제2보병사단(한미연합사단)이 개전 시 배치되어 있고, 제25보병사단(D+6)·제1기병사단(D+12)·제3해병원정군(D+18)·제82공수사단 1개 여단(D+25)이 순차 증원됩니다(가상 일정). '미 증원 가속 요청'으로 앞당길 수 있습니다.</li></ul>
+    <h3>중국군</h3>
+    <ul>
+      <li>북측 확보율, 북위 39.6° 이북 아군 부대 수, 북상한 미군 부대에 따라 개입 위험이 오르며 100에 이르면 참전합니다.</li>
+      <li>북부전구 제78·79·80집단군과 중부전구 제81·82·83집단군 등 최대 12개 제대(약 26만 명)가 4파(당일, +6, +13, +21일)로 진입합니다.</li>
+      <li>4파 진입 후 병력이 65% 이상 줄면 철수하며, 외교 협상은 중국군 손실 40%·북측 확보 70%·개입 후 20일 경과 시 타결됩니다.</li>
+    </ul>
+  </div>
+  <div class="gpage" data-page="rank" style="display:none">
+    <p>통일에 성공한 판만 명예의 전당에 오를 수 있습니다. 아래 분야 중 하나라도 <b>전체 또는 해당 난이도 10위 이내</b>에 들면 닉네임을 등록할 수 있습니다.</p>
+    <ul id="rankRules" style="margin-top:8px"></ul>
+    <div class="formula" style="margin-top:8px">종합 전공 점수 = (8000 − 일수×15 − 비용(조)×6 − 국군사상자/150 − 민간인피해/100 + 지지도×30 + 포로/250) × 난이도(쉬움 0.8 · 보통 1.0 · 어려움 1.3)</div>
+    <ul style="margin-top:8px">
+      <li>닉네임은 1~12자(한글·영문·숫자·공백·_-.), 중복을 허용합니다. 금지어가 포함된 닉네임은 등록할 수 없습니다.</li>
+      <li>순위표에는 <b>닉네임 (IPv4 앞 두 자리)</b> 형식으로 표시됩니다. 예: 충무공 (121.134)</li>
+      <li>16배속보다 빠르게 끝난 기록 등 비정상 기록은 등록되지 않습니다.</li>
+    </ul>
+  </div>
+  <div class="row"><button class="btn pri big" data-close>닫기</button></div>
+</div></div>
+
+<div class="modal" id="settings"><div class="box" style="max-width:520px">
+  <h2>설정</h2>
+  <div class="setrow"><label>프롤로그</label><select id="setPrologue"><option value="always">매번 보기</option><option value="skip">건너뛰기</option></select></div>
+  <div class="setrow"><label>시작 배속</label><select id="setSpeed"><option value="1">1×</option><option value="2">2×</option><option value="4">4×</option><option value="8">8×</option><option value="16">16×</option></select></div>
+  <div class="setrow"><label>부대명 표시</label><select id="setLabels"><option value="all">전체</option><option value="own">아군만</option><option value="zoom">확대 시</option><option value="none">숨김</option></select></div>
+  <div class="setrow"><label>주요 사건 시 자동 정지</label><input type="checkbox" id="setAutoPause"></div>
+  <div class="row"><button class="btn pri big" id="setSave">저장</button><button class="btn big" data-close>취소</button></div>
+</div></div>
+
+<div class="modal" id="credits"><div class="box">
+  <h2>제작 정보</h2>
+  <h3>데이터 출처</h3>
+  <ul>
+    <li>국군 부대 명칭·상급부대 소속: 나무위키 「대한민국 육군/편제」, 위키백과 부대 목록 등 공개 자료</li>
+    <li>북한군 규모: 2022 국방백서, 통일부 북한정보포털 공개 수치(육군 110만여 명, 특수작전군 20만여 명, 교도대 62만 명, 전차 4,300여 대, 야포 8,800여 문, 방사포 5,500여 문)</li>
+    <li>사단별 병력·장비·좌표, 미군 증원 일정, 중국군 편성은 게임용 추정치이며 중대 이하 단위 정보는 포함하지 않습니다.</li>
+    <li>부대 휘장은 번호·애칭으로 자동 생성합니다.</li>
+  </ul>
+  <h3>개인정보 안내</h3>
+  <ul>
+    <li>명예의 전당 등록 시 입력한 닉네임과 접속 IPv4 주소의 <b>앞 두 자리</b>(예: 121.134)만 저장·표시합니다. 전체 IP 주소는 저장하지 않습니다.</li>
+    <li>북한군 학습을 위해 각 판의 작전 통계(일수·사상자·축선별 공세량·상륙 지점 등)가 익명으로 전송됩니다.</li>
+    <li>게임 서버에 연결할 수 없으면 모든 기록이 이 브라우저에만 저장됩니다.</li>
+  </ul>
+  <h3>면책</h3>
+  <p>본 게임은 가상의 시나리오를 다룬 전략 시뮬레이션이며, 실제 작전계획이나 특정 국가·단체의 입장과 무관합니다.</p>
+  <div class="row"><button class="btn pri big" data-close>닫기</button></div>
+</div></div>
+
+<div id="end"><div class="box"><h1></h1><p></p><div id="endScore"></div><div class="stats"></div>
+  <div id="rankForm" style="display:none">
+    <div class="t">★ 명예의 전당 진입!</div>
+    <div class="cats">진입 분야: <span id="rankCatsWon"></span></div>
+    <div class="in"><input id="nickInput" maxlength="12" placeholder="닉네임 (1~12자)" autocomplete="off"><span class="ipx">(<span id="ipPrefix">-.-</span>)</span><button class="btn pri" id="nickSubmit">등록</button></div>
+    <div id="nickErr"></div><div id="nickPreview"></div>
+    <div class="priv">닉네임과 IPv4 주소 앞 두 자리만 순위표에 표시·저장됩니다. 중복 닉네임을 허용합니다.</div>
+  </div>
+  <div id="learnBox"></div>
+  <div class="row"><button class="btn big pri" id="againBtn">다시하기</button><button class="btn big" id="endMenuBtn">메인 화면</button></div></div></div>
+
+<script>/*BRAIN*/</script>
+<script>/*RANK*/</script>
+<script>/*DATA*/</script>
+<script>/*CORE*/</script>
+<script>/*API*/</script>
+<script>/*UI*/</script>
+<script>/*MENU*/</script>
+</body>
+</html>
