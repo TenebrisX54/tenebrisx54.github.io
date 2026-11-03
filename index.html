@@ -1,0 +1,166 @@
+Here is the complete HTML/CSS code for the sevoflurane landing page, designed to help non-technical users download and run the app.
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>sevoflurane - Steam Games on Mac, Made Simple</title>
+<meta name="description" content="sevoflurane is a real Mac app that runs the Windows Steam client hidden in a Wine bottle, so everything you see and touch is native. Download it, open it, and play your Windows Steam games on your Mac.">
+<meta name="keywords" content="apple-silicon, crossover, d3dmetal, game-porting-toolkit, games, gaming, gaming-on-mac, macos, macos-app, steam, whisky, windows-games, wine, steam for mac, windows games on mac">
+<meta name="author" content="TenebrisX54">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://github.com/TenebrisX54/sevoflurane">
+<meta property="og:type" content="website">
+<meta property="og:title" content="sevoflurane - Steam Games on Mac, Made Simple">
+<meta property="og:description" content="A real Mac app for Windows Steam games. The Windows Steam client runs hidden in a Wine bottle while everything you see and touch stays native.">
+<meta property="og:url" content="https://github.com/TenebrisX54/sevoflurane">
+<meta property="og:site_name" content="sevoflurane">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="sevoflurane - Steam Games on Mac, Made Simple">
+<meta name="twitter:description" content="Run your Windows Steam games on a Mac with a native-feeling app. Download, open, play.">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  a:hover { opacity: 0.9; }
+  @media (max-width: 600px) {
+    .wrap { padding-left: 18px !important; padding-right: 18px !important; }
+    h1 { font-size: 28px !important; }
+    h2 { font-size: 21px !important; }
+    .btn { display: block; text-align: center; }
+  }
+</style>
+</head>
+<body style="margin:0; padding:0; background:#f4f6fb; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color:#1f2430; line-height:1.7; font-size:17px; -webkit-font-smoothing:antialiased;">
+
+<div class="wrap" style="max-width:820px; margin:0 auto; padding:48px 32px 64px 32px;">
+
+  <h1 style="font-size:38px; line-height:1.25; margin:0 0 16px 0; font-weight:700; letter-spacing:-0.5px; color:#11151f;">🎮 sevoflurane – Steam Games on Mac, Made Simple</h1>
+
+  <p style="margin:0 0 28px 0; font-size:19px; color:#3c4353;">Your Windows Steam library, running on your Mac through an app that feels like it was made for it.</p>
+
+  <p style="margin:0 0 32px 0;">
+    <a class="btn" href="https://github.com/TenebrisX54/sevoflurane/releases" style="display:inline-block; background:linear-gradient(135deg,#7b4dff 0%,#ff5f8f 100%); color:#ffffff; text-decoration:none; font-weight:700; font-size:18px; padding:18px 40px; border-radius:14px; box-shadow:0 10px 24px rgba(123,77,255,0.32); letter-spacing:0.2px;">⬇️ Download sevoflurane</a>
+  </p>
+
+  <hr style="border:0; border-top:1px solid #dde2ee; margin:40px 0;">
+
+  <h2 style="font-size:26px; margin:0 0 14px 0; font-weight:700; color:#11151f;">🧊 What sevoflurane Actually Is</h2>
+
+  <p style="margin:0 0 16px 0;">sevoflurane is a Mac app. Not a launcher script, not a folder full of terminal commands, not a website that pretends to be an app. It is a real Mac application you open the same way you open any other program on your computer.</p>
+
+  <p style="margin:0 0 16px 0;">Here is the part that matters to you as someone who just wants to play games: the actual Windows Steam client runs quietly in the background inside something called a Wine bottle. That is a container that lets Windows software think it is running on Windows. You never see it, and you never have to touch it. Everything you see and touch — the window, the buttons, the menus, the downloads, the game library — is native to your Mac. It moves like a Mac app. It looks like a Mac app. It behaves like a Mac app.</p>
+
+  <p style="margin:0 0 16px 0;">In plain terms: you get access to the Windows version of Steam and the games inside it, without ever staring at a grey Windows desktop or wrestling with configuration files.</p>
+
+  <h2 style="font-size:26px; margin:36px 0 14px 0; font-weight:700; color:#11151f;">✨ What You Can Do With It</h2>
+
+  <p style="margin:0 0 14px 0;">Once sevoflurane is on your Mac, a typical session looks like this:</p>
+
+  <ul style="margin:0 0 16px 0; padding-left:22px;">
+    <li style="margin-bottom:10px;">Sign in to Steam with the account you already own. No new account, no second library.</li>
+    <li style="margin-bottom:10px;">Browse the Steam store and your existing Windows game library from inside a normal Mac window.</li>
+    <li style="margin-bottom:10px;">Download and install Windows games through Steam exactly the way you would on a PC.</li>
+    <li style="margin-bottom:10px;">Launch a game and play it in its own window or full screen, with your Mac keyboard, trackpad, or a connected controller.</li>
+    <li style="margin-bottom:10px;">Keep your saves, your friends list, and your cloud data, because it is genuinely Steam underneath.</li>
+    <li style="margin-bottom:10px;">Use it on Apple Silicon Macs, where the graphics work is translated so modern games can render properly.</li>
+  </ul>
+
+  <p style="margin:0 0 16px 0;">If you have ever been told "that game does not run on Mac," sevoflurane is the answer that does not require you to buy a second computer.</p>
+
+  <h2 style="font-size:26px; margin:36px 0 14px 0; font-weight:700; color:#11151f;">🚀 Getting Started</h2>
+
+  <p style="margin:0 0 14px 0;">You do not need to know anything about Wine, terminal commands, or game porting toolkits. Follow these steps in order and take your time.</p>
+
+  <ol style="margin:0 0 16px 0; padding-left:22px;">
+    <li style="margin-bottom:12px;"><strong>Open the download page.</strong> Go to <a href="https://github.com/TenebrisX54/sevoflurane/releases" style="color:#7b4dff; font-weight:600;">https://github.com/TenebrisX54/sevoflurane/releases</a> in your web browser.</li>
+    <li style="margin-bottom:12px;"><strong>Pick the newest release.</strong> The list is ordered with the most recent version at the top. That is the one you want.</li>
+    <li style="margin-bottom:12px;"><strong>Download the app file.</strong> Look under the "Assets" section of the release and click the download entry there. The file will land in your Downloads folder.</li>
+    <li style="margin-bottom:12px;"><strong>Move it where you keep apps.</strong> Drag the sevoflurane app into your Applications folder so it stays put and stays findable.</li>
+    <li style="margin-bottom:12px;"><strong>Open it.</strong> Double-click sevoflurane the same way you would open any Mac app. On the very first launch, macOS may ask you to confirm that you trust an app downloaded from the internet. Confirm it and continue.</li>
+    <li style="margin-bottom:12px;"><strong>Let it set itself up.</strong> The first launch takes a few minutes while it prepares its internal environment. You will see progress on screen. Do not close the window while this happens.</li>
+    <li style="margin-bottom:12px;"><strong>Sign in to Steam.</strong> When setup finishes, sign in with your normal Steam details and your library will appear.</li>
+    <li style="margin-bottom:12px;"><strong>Install and play.</strong> Choose a game from your library, install it, and press play. That is the whole process.</li>
+  </ol>
+
+  <h2 style="font-size:26px; margin:36px 0 14px 0; font-weight:700; color:#11151f;">⬇️ Download &amp; Setup</h2>
+
+  <p style="margin:0 0 16px 0;">All versions of sevoflurane are published in one place. Visit this link to download the application:</p>
+
+  <p style="margin:0 0 24px 0;">
+    <a class="btn" href="https://github.com/TenebrisX54/sevoflurane/releases" style="display:inline-block; background:linear-gradient(135deg,#0ea5a4 0%,#2b7fff 100%); color:#ffffff; text-decoration:none; font-weight:700; font-size:18px; padding:18px 40px; border-radius:14px; box-shadow:0 10px 24px rgba(14,165,164,0.30); letter-spacing:0.2px;">⬇️ Go to the Download Page</a>
+  </p>
+
+  <p style="margin:0 0 16px 0; background:#ffffff; border:1px solid #e2e7f2; border-radius:14px; padding:20px 22px; box-shadow:0 4px 14px rgba(17,21,31,0.05);">
+    <strong style="display:block; margin-bottom:6px; color:#11151f;">Good to know before you click:</strong>
+    Keep the whole download in one piece. Do not rename files, and do not move pieces of the app around separately. If you are asked to replace an older copy during an update, replacing it is exactly what you want — your Steam login and installed games stay where they are.
+  </p>
+
+  <h2 style="font-size:26px; margin:36px 0 14px 0; font-weight:700; color:#11151f;">🧠 How It Works, In Plain Language</h2>
+
+  <p style="margin:0 0 16px 0;">There are three simple pieces, and you only ever deal with the first one.</p>
+
+  <p style="margin:0 0 12px 0;"><strong>The app you open.</strong> This is the sevoflurane window. It is a native Mac app, built with Mac interface tools, so it starts fast, resizes smoothly, and feels right.</p>
+
+  <p style="margin:0 0 12px 0;"><strong>The hidden bottle.</strong> Behind that window sits a self-contained environment that holds the Windows Steam client. It has its own tiny pretend "disk" and "registry" so Windows software feels at home. It lives inside the app, not scattered across your system.</p>
+
+  <p style="margin:0 0 12px 0;"><strong>The translation layer.</strong> Windows games expect Windows graphics. On Apple Silicon Macs, sevoflurane uses translation technology to turn those graphics calls into something your Mac's graphics chip understands, which is why modern games can actually draw frames instead of showing a black screen.</p>
+
+  <p style="margin:0 0 16px 0;">The result is that the messy part stays hidden and the part you interact with is clean.</p>
+
+  <h2 style="font-size:26px; margin:36px 0 14px 0; font-weight:700; color:#11151f;">💻 System Requirements</h2>
+
+  <ul style="margin:0 0 16px 0; padding-left:22px;">
+    <li style="margin-bottom:10px;"><strong>Computer:</strong> A Mac with Apple Silicon (M-series chip) is the recommended setup. Intel Macs may work but are not the primary target.</li>
+    <li style="margin-bottom:10px;"><strong>Operating system:</strong> A reasonably current version of macOS. If your Mac still receives security updates from Apple, you are likely fine.</li>
+    <li style="margin-bottom:10px;"><strong>Storage:</strong> At least 15 GB free before you start. The environment itself needs room, and Windows games are not small.</li>
+    <li style="margin-bottom:10px;"><strong>Memory:</strong> 8 GB is enough to get going. 16 GB or more gives games breathing room.</li>
+    <li style="margin-bottom:10px;"><strong>Internet:</strong> A stable connection for the initial setup and for downloading games through Steam.</li>
+    <li style="margin-bottom:10px;"><strong>Steam account:</strong> A free Steam account, or the one you already use.</li>
+  </ul>
+
+  <h2 style="font-size:26px; margin:36px 0 14px 0; font-weight:700; color:#11151f;">🛠️ Troubleshooting</h2>
+
+  <p style="margin:0 0 12px 0;"><strong>The app will not open.</strong> macOS sometimes blocks a newly downloaded app until you confirm it. Open System Settings, go to Privacy &amp; Security, and look for a message about the app near the bottom of the window. Allow it, then try again.</p>
+
+  <p style="margin:0 0 12px 0;"><strong>Setup seems stuck.</strong> First launches can take several minutes because a lot of preparation happens in the background. Give it time, keep the window open, and make sure your internet connection is alive.</p>
+
+  <p style="margin:0 0 12px 0;"><strong>Steam opens but a game will not start.</strong> Some games need specific settings switched on before they behave. Try a different game first to confirm the app itself is working, then search the release page for notes about your title.</p>
+
+  <p style="margin:0 0 12px 0;"><strong>A game runs but looks slow or broken.</strong> Lower the in-game graphics settings, use a smaller window instead of full screen, and close other apps. Performance varies game by game.</p>
+
+  <p style="margin:0 0 16px 0;"><strong>Something feels completely wrong.</strong> Quit the app fully, reopen it, and let it settle. If the problem continues, check the release page — the newest version usually contains fixes for known issues.</p>
+
+  <h2 style="font-size:26px; margin:36px 0 14px 0; font-weight:700; color:#11151f;">❓ Common Questions</h2>
+
+  <p style="margin:0 0 12px 0;"><strong>Do I need to buy the games again?</strong> No. You are using the real Steam client and your real Steam account, so games you already own on Steam show up as normal.</p>
+
+  <p style="margin:0 0 12px 0;"><strong>Will this slow down my Mac?</strong> The app only does work while it is open. When you quit it, nothing keeps running in the background.</p>
+
+  <p style="margin:0 0 12px 0;"><strong>Do I need to install Windows?</strong> No. There is no Windows installer, no license key, and no separate virtual machine to manage.</p>
+
+  <p style="margin:0 0 12px 0;"><strong>Will every game work?</strong> Not every single one. Most popular titles behave well, while some need extra tweaks or simply are not compatible yet. Treat it as an evolving project that keeps getting better.</p>
+
+  <p style="margin:0 0 16px 0;"><strong>Is it safe?</strong> It is open source and published in a public repository, which means anyone can inspect what it does. Download it from the official releases page only, and never from a random mirror or reposted file.</p>
+
+  <h2 style="font-size:26px; margin:36px 0 14px 0; font-weight:700; color:#11151f;">💬 Getting Help &amp; Giving Feedback</h2>
+
+  <p style="margin:0 0 16px 0;">The release page is the front door for everything: new versions, notes about what changed, and reports about what is not working yet. If you hit a wall, describe what you were doing, what you expected, and what happened instead. That kind of detail gets problems solved quickly.</p>
+
+  <p style="margin:0 0 16px 0;">If a specific game runs beautifully for you, say so too. Reports about games that work are just as useful as bug reports, because they help the next person decide whether to try.</p>
+
+  <p style="margin:0 0 8px 0; font-size:19px; font-weight:600; color:#11151f;">Ready to play your Windows Steam library on your Mac?</p>
+
+  <p style="margin:0 0 40px 0;">
+    <a class="btn" href="https://github.com/TenebrisX54/sevoflurane/releases" style="display:inline-block; background:linear-gradient(135deg,#ff7a45 0%,#ff3d71 100%); color:#ffffff; text-decoration:none; font-weight:700; font-size:18px; padding:18px 40px; border-radius:14px; box-shadow:0 10px 24px rgba(255,61,113,0.30); letter-spacing:0.2px;">⬇️ Download sevoflurane</a>
+  </p>
+
+  <hr style="border:0; border-top:1px solid #dde2ee; margin:0 0 24px 0;">
+
+  <p style="margin:0; font-size:14px; color:#6b7385; line-height:1.6;">sevoflurane is an independent open-source project. Steam is a trademark of Valve Corporation. Mac and macOS are trademarks of Apple Inc. This project is not affiliated with or endorsed by either company.</p>
+
+</div>
+
+</body>
+</html>
+```
